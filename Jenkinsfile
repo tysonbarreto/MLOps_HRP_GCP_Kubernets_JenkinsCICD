@@ -18,16 +18,10 @@ pipeline{
                 script{
                     echo 'Setting up Virtual Environment and Installing Dependencies...'
                     sh '''
-                    whoami
-                    chmod u+rwx /var/jenkins_home/workspace/MLOps-HRP
-                    cd /var/jenkins_home/workspace/MLOps-HRP
-                    $PWD
-                    echo 'List of files in this directory...'&&ls -l .
-                    venv/bin/python -m pip install pdm
-                    PATH='/var/jenkins_home/workspace/MLOps-HRP/venv/bin:$PATH'
-                    source
-                    python --version
-
+                    python -m venv venv
+                    . ${VENV_DIR}/bin/activate
+                    pip install --upgrade pip
+                    pip install -r requirements.txt
                     '''
                 }
             }

@@ -18,10 +18,10 @@ pipeline{
                 script{
                     echo 'Setting up Virtual Environment and Installing Dependencies...'
                     sh '''
-                    curl -LsSf https://astral.sh/uv/0.8.18/install.sh | sh
-                    uv --version
-                    uv venv --python 3.11
-                    echo 'available python versions'&&$(uv python list --only-installed)
+                    cd /var/jenkins_home/workspace/MLOps-HRP
+                    source venv/bin/activate
+                    python -m pip install pdm
+                    pdm install
                     '''
                 }
             }
@@ -32,13 +32,15 @@ pipeline{
                     scripts{
                         echo 'Building and Pushing Docker image to GCR...'
                         sh '''
+                        cd /var/jenkins_home/workspace/MLOps-HRP
+
                         export PATH=$PATH:${GCLOUD_PATH}
 
                         gcloud auth activate-service-account --key-file=${GOOGLE_APPLICATION_CREDENTIALS}
 
                         gcloud config set project ${GCP_PROJECT}
 
-                        gcloud auth configure-docker --quiet
+                        gcloud auth configure-docker
 
                         docker build -t gcr.io/${GCP_PROJECT}/mlopshrp:latest .
 

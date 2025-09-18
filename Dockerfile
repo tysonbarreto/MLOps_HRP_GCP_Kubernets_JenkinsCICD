@@ -6,7 +6,7 @@ ENV PYTHONWRITEBYTECODE=1 \
 WORKDIR /app
 
 RUN apt-get update -y && apt-get upgrade -y && apt-get install -y --no-install-recommends\
-    libgomp1 && apt-get-clean && rm -rf /var/lib/apt/lists/*
+    libgomp1 && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 
 COPY . .

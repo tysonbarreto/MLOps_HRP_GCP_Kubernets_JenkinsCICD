@@ -16,7 +16,7 @@ pipeline{
             steps{
                 script{
                     echo 'Setting up Virtual Environment and Installing Dependencies...'
-                    sh "gcloud --version"
+                    sh "whoami"
                     sh "python -m pip install --break-system-packages -U uv"
                     sh "python -m uv venv --python 3.11"
                     sh "python -m uv sync"

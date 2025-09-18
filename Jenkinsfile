@@ -29,7 +29,6 @@ pipeline{
                     script{
                         echo 'Building and Pushing Docker image to GCR...'
                         sh "docker --version"
-                        sh "$(GOOGLE_APPLICATION_CREDENTIALS)"
                         sh "PATH=/var/jenkins_home/google_cloud_sdk/bin:$PATH"
                         sh "gcloud --version"
                     }

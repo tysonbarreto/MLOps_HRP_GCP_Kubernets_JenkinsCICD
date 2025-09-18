@@ -7,7 +7,6 @@ pipeline{
         stage('Clonning GitHub Repo to Jenkins'){
             steps{
                 script{
-                script{
                     echo 'Clonning GitHub Repo to Jenkins...'
                     checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'github-token', url: 'https://github.com/tysonbarreto/MLOps_HRP_GCP_Kubernets_JenkinsCICD.git']])
                 }
@@ -21,7 +20,9 @@ pipeline{
                     python -m venv ${VENV_DIR}
                     . ${VENV_DIR}/bin/activate
                     pip install --upgrade pip
-                    pip install requirements.txt
+                    pip install pdm
+                    pdm use -f ${VENV_DIR}
+                    pdm install
                     '''
                 }
             }

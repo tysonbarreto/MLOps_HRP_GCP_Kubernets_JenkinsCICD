@@ -2,7 +2,6 @@ pipeline{
     agent any
     environment{
         GCP_PROJECT = "mlopshrp"
-        GCLOUD_PATH = "var/jenkins_home/google_cloud_sdk/bin" 
     }
     stages{
         stage('Clonning GitHub Repo to Jenkins'){
@@ -17,42 +16,29 @@ pipeline{
             steps{
                 script{
                     echo 'Setting up Virtual Environment and Installing Dependencies...'
-                
+                    sh "gcloud --version"
                     sh "python -m pip install --break-system-packages -U uv"
-
                     sh "python -m uv venv --python 3.11"
-
                     sh "python -m uv sync"
                 }
             }
         }
-        // stage('Building and Pushing Docker image to GCR'){
-        //     steps{
-        //         withCredentials([file(credentialsId : 'gcp-key', variable : 'GOOGLE_APPLICATION_CREDENTIALS')]){
-        //             scripts{
-        //                 echo 'Building and Pushing Docker image to GCR...'
-        //                 sh '''
-        //                 cd /var/jenkins_home/workspace/MLOps-HRP
-        //                 $PWD
-        //                 echo 'List of files in this directory...'&&ls -l .
+        stage('Building and Pushing Docker image to GCR'){
+            steps{
+                withCredentials([file(credentialsId : 'gcp-key', variable : 'GOOGLE_APPLICATION_CREDENTIALS')]){
+                    scripts{
+                        echo 'Building and Pushing Docker image to GCR...'
+                        sh """
+                        gcloud auth activate-service-account --key-file=${GOOGLE_APPLICATION_CREDENTIALS}
+                        gcloud config set project ${GCP_PROJECT}
+                        gcloud auth configure-docker
+                        docker build -t gcr.io/${GCP_PROJECT}/mlopshrp:latest .
+                        docker push gcr.io/${GCP_PROJECT}/mlopshrp:latest
+                        """
+                    }
 
-        //                 export PATH=$PATH:${GCLOUD_PATH}
-
-        //                 gcloud auth activate-service-account --key-file=${GOOGLE_APPLICATION_CREDENTIALS}
-
-        //                 gcloud config set project ${GCP_PROJECT}
-
-        //                 gcloud auth configure-docker
-
-        //                 docker build -t gcr.io/${GCP_PROJECT}/mlopshrp:latest .
-
-        //                 docker push gcr.io/${GCP_PROJECT}/mlopshrp:latest
-
-        //                 '''
-        //             }
-
-        //         }
-        //     }
-        // }
+                }
+            }
+        }
         }
 }

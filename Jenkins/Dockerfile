@@ -22,9 +22,6 @@ RUN groupadd -f docker && \
 RUN mkdir -p /var/lib/docker
 VOLUME /var/lib/docker
 
-RUN chown jenkins:docker /var/jenkins_home/workspace
-RUN chmod 770 .
-
 USER jenkins
 
 

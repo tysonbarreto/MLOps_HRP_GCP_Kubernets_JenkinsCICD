@@ -20,7 +20,7 @@ pipeline{
                     sh '''
                     mkdir app
                     cd app
-                    python install uv 
+                    pip install uv 
                     uv venv --python 3.11
                     PATH='app/.venv/bin:$PATH'
                     uv add pdm

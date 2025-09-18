@@ -18,7 +18,10 @@ pipeline{
                 script{
                     echo 'Setting up Virtual Environment and Installing Dependencies...'
                     sh '''
-                    echo 'available python versions'&&$(uv python list --only-installed)
+                    python -m pip install -U uv 
+                    uv venv --python 3.11
+                    PATH='.venv/bin:$PATH'
+                    uv add pdm
                     '''
                 }
             }

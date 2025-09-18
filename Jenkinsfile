@@ -19,11 +19,11 @@ pipeline{
                     echo 'Setting up Virtual Environment and Installing Dependencies...'
                     sh '''
                     $PWD
-                    whoami
-                    ls -l .
-                    python -m venv venv
-                    venv/bin/python -m pip install --upgrade pip
-                    venv/bin/python -m pip install -r requirements.txt
+                    chmod +x .
+                    curl -LsSf https://astral.sh/uv/0.8.18/install.sh | sh
+                    uv venv --python 3.11
+                    uv add pdm
+                    pdm install
                     '''
                 }
             }

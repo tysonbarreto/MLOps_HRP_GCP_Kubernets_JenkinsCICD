@@ -1,8 +1,8 @@
 pipeline{
     agent any
     environment{
-        VENV_DIR = 'venv',
-        GCP_PROJECT = "mlopshrp",
+        VENV_DIR = 'venv'
+        GCP_PROJECT = "mlopshrp"
         GCLOUD_PATH = "var/jenkins_home/google_cloud_sdk/bin" 
     }
     stages{

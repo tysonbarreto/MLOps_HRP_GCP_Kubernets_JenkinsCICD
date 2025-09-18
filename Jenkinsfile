@@ -22,8 +22,8 @@ pipeline{
                     cd app
                     python install uv 
                     uv venv --python 3.11
-                    PATH='.venv/bin:$PATH'
-                    uv sync
+                    PATH='app/.venv/bin:$PATH'
+                    uv add pdm
                     '''
                 }
             }

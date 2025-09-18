@@ -19,9 +19,13 @@ pipeline{
                     echo 'Setting up Virtual Environment and Installing Dependencies...'
                     sh '''
                     cd /var/jenkins_home/workspace/MLOps-HRP
-                    source venv/bin/activate
-                    python -m pip install pdm
-                    pdm install
+                    $PWD
+                    echo 'List of files in this directory...'&&ls -l .
+                    venv/bin/python -m pip install pdm
+                    PATH='/var/jenkins_home/workspace/MLOps-HRP/venv/bin:$PATH'
+                    source
+                    python --version
+
                     '''
                 }
             }
@@ -33,7 +37,9 @@ pipeline{
                         echo 'Building and Pushing Docker image to GCR...'
                         sh '''
                         cd /var/jenkins_home/workspace/MLOps-HRP
-
+                        $PWD
+                        echo 'List of files in this directory...'&&ls -l .
+                        
                         export PATH=$PATH:${GCLOUD_PATH}
 
                         gcloud auth activate-service-account --key-file=${GOOGLE_APPLICATION_CREDENTIALS}

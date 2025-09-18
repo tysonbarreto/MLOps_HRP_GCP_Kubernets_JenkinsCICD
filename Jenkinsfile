@@ -1,7 +1,6 @@
 pipeline{
     agent any
     environment{
-        VENV_DIR = 'venv'
         GCP_PROJECT = "mlopshrp"
         GCLOUD_PATH = "var/jenkins_home/google_cloud_sdk/bin" 
     }
@@ -19,12 +18,10 @@ pipeline{
                 script{
                     echo 'Setting up Virtual Environment and Installing Dependencies...'
                     sh '''
-                    python -m venv ${VENV_DIR}
-                    ${VENV_DIR}/bin/activate
-                    pip install --upgrade pip
-                    pip install pdm
-                    pdm use -f ${VENV_DIR}
-                    pdm install
+                    python install uv 
+                    uv venv --python 3.11
+                    PATH='.venv/bin:$PATH'
+                    uv sync
                     '''
                 }
             }
@@ -43,7 +40,7 @@ pipeline{
 
                         gcloud auth configure-docker --quiet
 
-                        docker build --progress-plain -t gcr.io/${GCP_PROJECT}/mlopshrp:latest .
+                        docker build -t gcr.io/${GCP_PROJECT}/mlopshrp:latest .
 
                         docker push gcr.io/${GCP_PROJECT}/mlopshrp:latest
 

@@ -31,6 +31,7 @@ def index():
                               room_type_reserved]])
         prediction = loaded_model.predict(features)
         return render_template('index.html', prediction=prediction[0])
+    return render_template('index.html', prediction=None)
 
 
 

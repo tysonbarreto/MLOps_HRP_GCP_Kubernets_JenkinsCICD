@@ -22,7 +22,9 @@ class DataIngestion:
 
     def download_csv_from_gcp(self):
         try:
-            os.environ['GOOGLE_APPLICATION_CREDENTIALS']="F:\learning\MLOps-HRP\mlops.json"
+            from dotenv import load_dotenv, find_dotenv
+            load_dotenv(find_dotenv())
+            #os.environ['GOOGLE_APPLICATION_CREDENTIALS']=os.getenv('GOOGLE_APPLICATION_CREDENTIALS')
             client = storage.Client()
             bucket = client.bucket(self.bucket_name)
             blob = bucket.blob(self.file_name)

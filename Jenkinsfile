@@ -18,6 +18,8 @@ pipeline{
                 script{
                     echo 'Setting up Virtual Environment and Installing Dependencies...'
                     sh '''
+                    whoami
+                    chmod u+rwx /var/jenkins_home/workspace/MLOps-HRP
                     cd /var/jenkins_home/workspace/MLOps-HRP
                     $PWD
                     echo 'List of files in this directory...'&&ls -l .
@@ -39,7 +41,7 @@ pipeline{
                         cd /var/jenkins_home/workspace/MLOps-HRP
                         $PWD
                         echo 'List of files in this directory...'&&ls -l .
-                        
+
                         export PATH=$PATH:${GCLOUD_PATH}
 
                         gcloud auth activate-service-account --key-file=${GOOGLE_APPLICATION_CREDENTIALS}

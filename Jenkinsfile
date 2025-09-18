@@ -1,7 +1,9 @@
 pipeline{
     agent any
     environment{
-        VENV_DIR = 'venv'
+        VENV_DIR = 'venv',
+        GCP_PROJECT = "mlopshrp",
+        GCLOUD_PATH = "var/jenkins_home/google_cloud_sdk/bin" 
     }
     stages{
         stage('Clonning GitHub Repo to Jenkins'){
@@ -18,12 +20,36 @@ pipeline{
                     echo 'Setting up Virtual Environment and Installing Dependencies...'
                     sh '''
                     python -m venv ${VENV_DIR}
-                    . ${VENV_DIR}/bin/activate
+                    ${VENV_DIR}/bin/activate
                     pip install --upgrade pip
                     pip install pdm
                     pdm use -f ${VENV_DIR}
                     pdm install
                     '''
+                }
+            }
+        }
+        stage('Building and Pushing Docker image to GCR'){
+            steps{
+                withCredentials([file(credentialsId : 'gcp-key', variable : 'GOOGLE_APPLICATION_CREDENTIALS')]){
+                    scripts{
+                        echo 'Building and Pushing Docker image to GCR...'
+                        sh '''
+                        export PATH=$PATH:${GCLOUD_PATH}
+
+                        gcloud auth activate-service-account --key-file=${GOOGLE_APPLICATION_CREDENTIALS}
+
+                        gcloud config set project ${GCP_PROJECT}
+
+                        gcloud auth configure-docker --quiet
+
+                        docker build -t gcr.io/${GCP_PROJECT}/mlopshrp:latest .
+
+                        docker push gcr.io/${GCP_PROJECT}/mlopshrp:latest
+
+                        '''
+                    }
+
                 }
             }
         }

@@ -1,8 +1,3 @@
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-
-
 # 🧠 ML Pipeline with DVC, MLflow, Jenkins & Flask Frontend
 
 Welcome to this end-to-end machine learning project! This repository demonstrates a robust ML workflow with:
@@ -368,8 +363,4 @@ Pull requests are welcome! For major changes, please open an issue first to disc
 
 [MIT](LICENSE)
 
----
-<<<<<<< HEAD
-=======
->>>>>>> 4ae36f8 (flask app added)
->>>>>>> 0be57d0 (Jenkins Dockerfile added)
+

@@ -18,7 +18,7 @@ pipeline{
                 script{
                     echo 'Setting up Virtual Environment and Installing Dependencies...'
                     sh '''
-                    mkdir -d app
+                    mkdir app
                     cd app
                     python install uv 
                     uv venv --python 3.11

@@ -18,8 +18,10 @@ pipeline{
                 script{
                     echo 'Setting up Virtual Environment and Installing Dependencies...'
                     sh '''
-                    python -m pip install -U uv 
+                    curl -LsSf https://astral.sh/uv/install.sh | sh
+                    uv --version
                     uv venv --python 3.11
+                    uv init
                     PATH='.venv/bin:$PATH'
                     uv add pdm
                     '''

@@ -18,6 +18,9 @@ pipeline{
                 script{
                     echo 'Setting up Virtual Environment and Installing Dependencies...'
                     sh '''
+                    curl -LsSf https://astral.sh/uv/0.8.18/install.sh | sh
+                    uv --version
+                    uv venv --python 3.11
                     echo 'available python versions'&&$(uv python list --only-installed)
                     '''
                 }

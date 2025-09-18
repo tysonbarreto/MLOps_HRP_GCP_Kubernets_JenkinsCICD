@@ -19,6 +19,8 @@ pipeline{
                     echo 'Setting up Virtual Environment and Installing Dependencies...'
                     sh '''
                     $PWD
+                    whoami
+                    ls -l .
                     python -m venv venv
                     venv/bin/python -m pip install --upgrade pip
                     venv/bin/python -m pip install -r requirements.txt

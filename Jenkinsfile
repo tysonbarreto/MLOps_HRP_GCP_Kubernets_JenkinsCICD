@@ -18,11 +18,9 @@ pipeline{
                 script{
                     echo 'Setting up Virtual Environment and Installing Dependencies...'
                     sh '''
-                    mkdir app
-                    cd app
-                    pip install uv 
+                    pip install -U uv 
                     uv venv --python 3.11
-                    PATH='app/.venv/bin:$PATH'
+                    PATH='.venv/bin:$PATH'
                     uv add pdm
                     '''
                 }

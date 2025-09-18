@@ -18,8 +18,14 @@ pipeline{
                 script{
                     echo 'Setting up Virtual Environment and Installing Dependencies...'
                     sh '''
+                    $PWD
+                    cd ~
+                    chmod +rwx workspace/MLOps-HRP
+                    cd workspace/MLOps-HRP
+                    $PWD
+                    
                     python -m venv venv
-                    . ${VENV_DIR}/bin/activate
+                    . venv/bin/activate
                     pip install --upgrade pip
                     pip install -r requirements.txt
                     '''

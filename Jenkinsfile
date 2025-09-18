@@ -43,7 +43,7 @@ pipeline{
 
                         gcloud auth configure-docker --quiet
 
-                        docker build -t gcr.io/${GCP_PROJECT}/mlopshrp:latest .
+                        docker build --progress-plain -t gcr.io/${GCP_PROJECT}/mlopshrp:latest .
 
                         docker push gcr.io/${GCP_PROJECT}/mlopshrp:latest
 

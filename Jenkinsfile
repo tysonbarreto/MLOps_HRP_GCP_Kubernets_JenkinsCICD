@@ -9,7 +9,7 @@ pipeline{
             steps{
                 script{
                     echo 'Clonning GitHub Repo to Jenkins...'
-                    git branch: 'main', credentialsId: 'github-jenkins', url: 'https://github.com/tysonbarreto/MLOps_HRP_GCP_Kubernets_JenkinsCICD.git'
+                    checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'github-jenkins', url: 'https://github.com/tysonbarreto/MLOps_HRP_GCP_Kubernets_JenkinsCICD.git']])
                 }
             }
         }
@@ -18,14 +18,7 @@ pipeline{
                 script{
                     echo 'Setting up Virtual Environment and Installing Dependencies...'
                     sh '''
-                    $PWD
-                    whoami
-                    ls -l .
-                    chmod +x .
-                    curl -LsSf https://astral.sh/uv/0.8.18/install.sh | sh
-                    uv venv --python 3.11
-                    uv add pdm
-                    pdm install
+                    python --version
                     '''
                 }
             }

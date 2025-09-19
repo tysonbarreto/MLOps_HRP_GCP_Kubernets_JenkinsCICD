@@ -29,7 +29,7 @@ COPY Jenkins/ /app/Jenkins
 COPY application.py /app/
 COPY Jenkinsfile /app/
 COPY Dockerfile /app/
-# COPY mlops.json /app/
+COPY mlops.json /app/
 ENV GOOGLE_APPLICATION_CREDENTIALS=${GOOGLE_APPLICATION_CREDENTIALS}
 #"/app/mlops.json"
 COPY dvc.yaml /app/
@@ -39,5 +39,7 @@ EXPOSE 5000
 
 RUN dvc init --no-scm 
 RUN dvc repro
+
+RUN rm -rf /app/mlops.json
 # set command/entrypoint, adapt to fit your needs
 CMD ["python", "application.py"]

@@ -62,7 +62,7 @@ pipeline{
                         gcloud auth activate-service-account --key-file=${GOOGLE_APPLICATION_CREDENTIALS}
                         gcloud config set project ${GCP_PROJECT}
 
-                        gcloud run deploy mlopshrp \
+                        gcloud run deploy ${GCP_PROJECT} \
                             --image=gcr.io/${GCP_PROJECT}/mlopshrp:latest \
                             --platform=managed \
                             --region=us-central1 \

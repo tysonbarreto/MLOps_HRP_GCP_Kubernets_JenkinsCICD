@@ -29,8 +29,7 @@ pipeline{
                     script{
                         echo 'Building and Pushing Docker image to GCR...'
                         sh "docker --version"
-                        sh "apt-get update && apt-get install -y google-cloud-sdk"
-                        sh "export PATH=$PATH:/var/jenkins_home/google-cloud-sdk/bin"
+                        sh "export PATH=~/google-cloud-sdk/bin:$PATH"
                         sh "gcloud --version"
                     }
 

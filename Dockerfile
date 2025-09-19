@@ -14,7 +14,7 @@ RUN uv sync
 # RUN pdm install
 
 FROM python:3.11-slim-bookworm AS runner
-ARG GOOGLE_APPLICATION_CREDENTIALS
+
 WORKDIR /app
 RUN apt-get update && apt-get install -y --no-install-recommends \
     libgomp1 \
@@ -30,8 +30,7 @@ COPY application.py /app/
 COPY Jenkinsfile /app/
 COPY Dockerfile /app/
 COPY mlops.json /app/
-ENV GOOGLE_APPLICATION_CREDENTIALS=${GOOGLE_APPLICATION_CREDENTIALS}
-#"/app/mlops.json"
+ENV GOOGLE_APPLICATION_CREDENTIALS="/app/mlops.json"
 COPY dvc.yaml /app/
 
 # Expose the application port

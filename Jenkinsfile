@@ -2,6 +2,7 @@ pipeline{
     agent any
     environment{
         GCP_PROJECT = "mlopshrp"
+        PATH="/var/jenkins_home/google-cloud-sdk/bin:$PATH"
     }
     stages{
         stage('Clonning GitHub Repo to Jenkins'){
@@ -29,11 +30,14 @@ pipeline{
                     script{
                         echo 'Building and Pushing Docker image to GCR...'
                         sh'''
-                        whoami
+                        cd ~/..
                         docker --version
-                        source /var/jenkins_home/google-cloud-sdk/path.bash.inc
-                        source /var/jenkins_home/google-cloud-sdk/completion.bash.inc
+                        chmod +x /var/jenkins_home/google-cloud-sdk/bin
+                        ./var/jenkins_home/google-cloud-sdk/install.sh
                         gcloud --version
+                        gcloud auth activate-service-account --key-file=${GOOGLE_APPLICATION_CREDENTIALS}
+                        gcloud config set project ${GCP_PROJECT}
+                        gcloud auth configure-docker
                         '''
                     }
 

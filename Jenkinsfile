@@ -47,12 +47,30 @@ pipeline{
                 }
             }
         }
+        stage('Building and Pushing Docker image to Google Cloud Run'){
+            steps{
+                withCredentials([file(credentialsId : 'gcp-key', variable : 'GOOGLE_APPLICATION_CREDENTIALS')]){
+                    script{
+                        echo 'Building and Pushing Docker image to Google Cloud Run...'
+                        sh'''
+                        cd ~/..
+
+                        chmod +x /var/jenkins_home/google-cloud-sdk/bin
+                        ./var/jenkins_home/google-cloud-sdk/install.sh
+                        gcloud --version
+                        gcloud auth activate-service-account --key-file=${GOOGLE_APPLICATION_CREDENTIALS}
+                        gcloud config set project ${GCP_PROJECT}
+
+                        gcloud run deploy ...\
+                            --image=mlopshrp:gcr.io/${GCP_PROJECT}/mlopshrp:latest \
+                            --platform=managed \
+                            --region=us-central1 \
+                            --allow=unauthenticated
+                        '''
+                    }
+
+                }
+            }
+        }
         }
 }
-
-// gcloud auth activate-service-account --key-file=${GOOGLE_APPLICATION_CREDENTIALS}
-// gcloud config set project ${GCP_PROJECT}
-// gcloud auth configure-docker
-
-// docker build -t gcr.io/${GCP_PROJECT}/mlopshrp:latest .
-// docker push gcr.io/${GCP_PROJECT}/mlopshrp:latest

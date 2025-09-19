@@ -28,11 +28,11 @@ pipeline{
                 withCredentials([file(credentialsId : 'gcp-key', variable : 'GOOGLE_APPLICATION_CREDENTIALS')]){
                     script{
                         echo 'Building and Pushing Docker image to GCR...'
-                        sh """
+                        sh'''
                         docker --version
                         export PATH=~/var/jenkins_home/google-cloud-sdk/bin:$PATH"
                         gcloud --version
-                        """
+                        '''
                     }
 
                 }

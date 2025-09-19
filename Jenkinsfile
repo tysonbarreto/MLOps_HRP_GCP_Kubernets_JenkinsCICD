@@ -29,8 +29,10 @@ pipeline{
                     script{
                         echo 'Building and Pushing Docker image to GCR...'
                         sh'''
+                        whoami
                         docker --version
-                        export PATH=~/var/jenkins_home/google-cloud-sdk/bin:$PATH
+                        source /var/jenkins_home/google-cloud-sdk/path.bash.inc
+                        source /var/jenkins_home/google-cloud-sdk/completion.bash.inc
                         gcloud --version
                         '''
                     }

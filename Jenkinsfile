@@ -39,6 +39,7 @@ pipeline{
                         gcloud config set project ${GCP_PROJECT}
                         gcloud auth configure-docker
                         cd /var/jenkins_home/workspace/MLOps-HRP/
+                        cat ${GOOGLE_APPLICATION_CREDENTIALS} > mlops.json
                         docker build --build-arg=${GOOGLE_APPLICATION_CREDENTIALS} -t gcr.io/${GCP_PROJECT}/mlopshrp:latest .
                         docker push gcr.io/${GCP_PROJECT}/mlopshrp:latest
                         '''

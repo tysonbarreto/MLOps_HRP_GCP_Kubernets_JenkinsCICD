@@ -63,7 +63,7 @@ pipeline{
                         gcloud config set project ${GCP_PROJECT}
 
                         gcloud run deploy ...\
-                            --image=mlopshrp:gcr.io/${GCP_PROJECT}/mlopshrp:latest \
+                            --image=gcr.io/${GCP_PROJECT}/mlopshrp:latest \
                             --platform=managed \
                             --region=us-central1 \
                             --allow-unauthenticated

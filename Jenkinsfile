@@ -65,7 +65,7 @@ pipeline{
                             --image=mlopshrp:gcr.io/${GCP_PROJECT}/mlopshrp:latest \
                             --platform=managed \
                             --region=us-central1 \
-                            --allow=unauthenticated
+                            --allow-unauthenticated
                         '''
                     }
 

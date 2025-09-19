@@ -14,6 +14,7 @@ RUN uv sync
 # RUN pdm install
 
 FROM python:3.11-slim-bookworm AS runner
+ARG GOOGLE_APPLICATION_CREDENTIALS
 WORKDIR /app
 RUN apt-get update && apt-get install -y --no-install-recommends \
     libgomp1 \
